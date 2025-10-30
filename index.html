@@ -53,7 +53,7 @@
               'Content-Type': 'application/json',
               'x-goog-api-key': localStorage.geminiKey,
             },
-            body: `{contents:[{parts:[{text:${JSON.stringify(prompt)}}]}],"tools":[{"url_context":{}},{"code_execution": {}}]}`,
+            body: `{contents:[{parts:[{text:${JSON.stringify(prompt)}}]}],"tools":[{"url_context":{}}]}`,
           })
 
           if (!response.ok) {

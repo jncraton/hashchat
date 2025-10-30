@@ -33,6 +33,7 @@
     <details>
       <summary>Config</summary>
       <label>Temperature<input id="temperature" type="number" min="0" max="2" step=".1" value="0" /></label>
+      <label>Thinking Tokens<input id="thinking" type="number" min="0" max="32768" step="1024" value="0" /></label>
     </details>
     <h2>Response<button id="copy">Copy 📋</button></h2>
     <pre id="response"></pre>
@@ -87,7 +88,7 @@
               ],
               generationConfig: {
                 thinkingConfig: {
-                  thinkingBudget: 0,
+                  thinkingBudget: thinking.value,
                 },
                 temperature: temperature.value,
               },

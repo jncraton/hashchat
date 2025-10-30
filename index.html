@@ -29,7 +29,7 @@
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <textarea rows="5" placeholder="Enter your prompt"></textarea>
+    <textarea id="userPrompt" rows="5" placeholder="Enter your prompt"></textarea>
     <details>
       <summary>Config</summary>
       <label>
@@ -69,12 +69,11 @@ Never use smart quotes or em dashes.
 
     <script>
       const chat = async () => {
-        localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
+        localStorage.geminiKey = localStorage.geminiKey || prompt('Gemini Key')
 
-        let prompt = document.querySelector('textarea').value
         const responseElement = document.getElementById('response')
 
-        if (!prompt) {
+        if (!userPrompt.value) {
           alert('Please enter a prompt.')
           return
         }
@@ -95,7 +94,7 @@ Never use smart quotes or em dashes.
                 {
                   parts: [
                     {
-                      text: system.value.trim() + '\n\n' + prompt,
+                      text: system.value.trim() + '\n\n' + userPrompt.value,
                     },
                   ],
                 },

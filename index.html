@@ -41,17 +41,7 @@
               'Content-Type': 'application/json',
               'x-goog-api-key': apiKey,
             },
-            body: JSON.stringify({
-              contents: [
-                {
-                  parts: [
-                    {
-                      text: prompt,
-                    },
-                  ],
-                },
-              ],
-            }),
+            body: `{contents:[{parts:[{text:${JSON.stringify(prompt)}}]}]}`,
           })
 
           if (!response.ok) {

@@ -30,6 +30,10 @@
   </head>
   <body>
     <textarea rows="5" placeholder="Enter your prompt"></textarea>
+    <details>
+      <summary>Config</summary>
+      <label>Temperature<input id="temperature" type="number" min="0" max="2" step=".1" value="0" /></label>
+    </details>
     <h2>Response<button id="copy">Copy 📋</button></h2>
     <pre id="response"></pre>
 
@@ -85,7 +89,7 @@
                 thinkingConfig: {
                   thinkingBudget: 0,
                 },
-                temperature: 0,
+                temperature: temperature.value,
               },
             }),
           })

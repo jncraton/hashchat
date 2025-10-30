@@ -11,14 +11,7 @@
     <pre id="response"></pre>
 
     <script>
-      document.querySelector('textarea').value = location.hash.slice(1)
-
-      document.querySelector('textarea').addEventListener('keydown', async e => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault()
-        } else {
-          return
-        }
+      const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
 
         const prompt = document.querySelector('textarea').value
@@ -77,6 +70,20 @@
         } catch (error) {
           console.error('Error:', error)
           responseElement.textContent = `Error: ${error.message}`
+        }
+      }
+
+      if (location.hash.slice(1)) {
+        document.querySelector('textarea').value = location.hash.slice(1)
+        chat()
+      }
+
+      document.querySelector('textarea').addEventListener('keydown', async e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault()
+          chat()
+        } else {
+          return
         }
       })
     </script>

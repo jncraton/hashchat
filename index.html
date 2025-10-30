@@ -38,7 +38,10 @@
         Never apply text emphasis, such as bold or italics.
         Never use emojis. Use only basic ascii characters.
         Never use smart quotes or em dashes.
-        `.split("\n").map(s => s.trim()).join("\n")
+        `
+        .split('\n')
+        .map(s => s.trim())
+        .join('\n')
 
       const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')

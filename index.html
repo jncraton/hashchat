@@ -60,9 +60,9 @@
               'x-goog-api-key': localStorage.geminiKey,
             },
             body: `{
-              contents:[{parts:[{text:${JSON.stringify(system + "\n\n" + prompt)}}]}],
-              tools:[{"url_context":{}}],
-              generationConfig:{temperature:0}
+              "contents":[{"parts":[{"text":${JSON.stringify(system + "\n\n" + prompt)}}]}],
+              "tools":[{"url_context":{}}],
+              "generationConfig":{"temperature":0}
             }`,
           })
 

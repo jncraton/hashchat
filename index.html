@@ -55,7 +55,7 @@
               'Content-Type': 'application/json',
               'x-goog-api-key': localStorage.geminiKey,
             },
-            body: `{contents:[{parts:[{text:${JSON.stringify(prompt)}}]}],"tools":[{"url_context":{}}]}`,
+            body: `{contents:[{parts:[{text:${JSON.stringify(prompt)}}]}],"tools":[{"url_context":{}},{"code_execution": {}}]}`,
           })
 
           if (!response.ok) {
@@ -79,7 +79,13 @@
                   try {
                     const json = JSON.parse(jsonString)
                     if (json.candidates && json.candidates[0].content && json.candidates[0].content.parts[0]) {
-                      responseElement.textContent += json.candidates[0].content.parts[0].text
+                      const part = json.candidates[0].content.parts[0]
+                      if (part.text) responseElement.textContent += part.text
+                      if (part.executableCode)
+                        responseElement.textContent += '\n\n## Executable Code\n\n' + part.executableCode.code
+                      if (part.codeExecutionResult)
+                        responseElement.textContent +=
+                          '\n\n## Execution Result\n\n' + part.codeExecutionResult.output + '\n-----\n\n'
                     }
                   } catch (e) {
                     console.error('Error parsing JSON:', e)

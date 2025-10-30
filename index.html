@@ -6,7 +6,7 @@
     <title>hashchat</title>
   </head>
   <body>
-    <textarea id="prompt" rows="5" cols="50" placeholder="Enter your prompt"></textarea>
+    <textarea rows="5" cols="50" placeholder="Enter your prompt"></textarea>
     <h2>Response:</h2>
     <pre id="response"></pre>
 
@@ -19,7 +19,7 @@
         }
         localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
 
-        const prompt = document.getElementById('prompt').value
+        const prompt = document.querySelector('textarea').value
         const responseElement = document.getElementById('response')
 
         if (!prompt) {

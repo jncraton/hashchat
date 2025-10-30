@@ -6,4 +6,4 @@
 
 Run chat completions from a URL hash fragment
 
-![Demo](https://jncraton.github.io/hashchat/)
+[Demo](https://jncraton.github.io/hashchat/)

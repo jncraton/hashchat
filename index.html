@@ -6,8 +6,6 @@
     <title>hashchat</title>
   </head>
   <body>
-    <input type="text" id="apiKey" placeholder="Enter your API Key" />
-    <br />
     <textarea id="prompt" rows="5" cols="50" placeholder="Enter your prompt"></textarea>
     <br />
     <button id="generate">Generate</button>
@@ -17,14 +15,10 @@
 
     <script>
       document.getElementById('generate').addEventListener('click', async () => {
-        const apiKey = document.getElementById('apiKey').value
+        localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
+
         const prompt = document.getElementById('prompt').value
         const responseElement = document.getElementById('response')
-
-        if (!apiKey) {
-          alert('Please enter your API key.')
-          return
-        }
 
         if (!prompt) {
           alert('Please enter a prompt.')
@@ -41,7 +35,7 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-goog-api-key': apiKey,
+              'x-goog-api-key': localStorage.geminiKey,
             },
             body: `{contents:[{parts:[{text:${JSON.stringify(prompt)}}]}]}`,
           })

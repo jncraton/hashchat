@@ -28,7 +28,7 @@
   </head>
   <body>
     <textarea rows="5" placeholder="Enter your prompt"></textarea>
-    <h2>Response</h2>
+    <h2>Response <button id="copy">Copy 📋</button></h2>
     <pre id="response"></pre>
 
     <script>
@@ -98,6 +98,10 @@
         document.querySelector('textarea').value = location.hash.slice(1)
         chat()
       }
+
+      copy.addEventListener('click', async e => {
+        await navigator.clipboard.writeText(response.textContent)
+      })
 
       document.querySelector('textarea').addEventListener('keydown', async e => {
         if (e.key === 'Enter' && !e.shiftKey) {

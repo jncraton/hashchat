@@ -11,6 +11,8 @@
     <pre id="response"></pre>
 
     <script>
+      document.querySelector('textarea').value = location.hash.slice(1)
+
       document.querySelector('textarea').addEventListener('keydown', async e => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault()

@@ -32,10 +32,17 @@
     <textarea rows="5" placeholder="Enter your prompt"></textarea>
     <details>
       <summary>Config</summary>
-      <label>Temperature<input id="temperature" type="number" min="0" max="2" step=".1" value="0" /></label>
-      <label>Thinking Tokens<input id="thinking" type="number" min="0" max="32768" step="1024" value="0" /></label>
-      <label
-        >System<textarea id="system" rows="5" autocomplete="off">
+      <label>
+        Temperature
+        <input id="temperature" type="number" min="0" max="2" step=".1" value="0" />
+      </label>
+      <label>
+        Thinking Tokens
+        <input id="thinking" type="number" min="0" max="32768" step="1024" value="0" />
+      </label>
+      <label>
+        System
+        <textarea id="system" rows="5" autocomplete="off">
 Respond using simple sentence structure applying literary minimalism when appropriate.
 
 Never use bold or italics.
@@ -46,7 +53,10 @@ Never use smart quotes or em dashes.
         </textarea>
       </label>
     </details>
-    <h2>Response<button id="copy">Copy 📋</button></h2>
+    <h2>
+      Response
+      <button id="copy">Copy 📋</button>
+    </h2>
     <pre id="response"></pre>
 
     <script>

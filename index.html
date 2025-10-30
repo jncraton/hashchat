@@ -34,10 +34,12 @@
     <pre id="response"></pre>
 
     <script>
+      const system = "Never apply text emphasis, such as bold or italics."
+
       const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
 
-        const prompt = document.querySelector('textarea').value
+        let prompt = document.querySelector('textarea').value
         const responseElement = document.getElementById('response')
 
         if (!prompt) {
@@ -58,7 +60,7 @@
               'x-goog-api-key': localStorage.geminiKey,
             },
             body: `{
-              contents:[{parts:[{text:${JSON.stringify(prompt)}}]}],
+              contents:[{parts:[{text:${JSON.stringify(system + "\n\n" + prompt)}}]}],
               tools:[{"url_context":{}}]
             }`,
           })

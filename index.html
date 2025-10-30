@@ -7,14 +7,16 @@
   </head>
   <body>
     <textarea id="prompt" rows="5" cols="50" placeholder="Enter your prompt"></textarea>
-    <br />
-    <button id="generate">Generate</button>
-
     <h2>Response:</h2>
     <pre id="response"></pre>
 
     <script>
-      document.getElementById('generate').addEventListener('click', async () => {
+      document.querySelector('textarea').addEventListener('keydown', async e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault()
+        } else {
+          return
+        }
         localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
 
         const prompt = document.getElementById('prompt').value

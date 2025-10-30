@@ -34,21 +34,20 @@
       <summary>Config</summary>
       <label>Temperature<input id="temperature" type="number" min="0" max="2" step=".1" value="0" /></label>
       <label>Thinking Tokens<input id="thinking" type="number" min="0" max="32768" step="1024" value="0" /></label>
+      <label>System<textarea id=system rows="5" autocomplete=off>
+Respond using simple sentence structure applying literary minimalism when appropriate.
+
+Never use bold or italics.
+
+Never use emojis. Use only basic ascii characters.
+
+Never use smart quotes or em dashes.
+      </textarea></label>
     </details>
     <h2>Response<button id="copy">Copy 📋</button></h2>
     <pre id="response"></pre>
 
     <script>
-      const system = `
-        Respond using simple language and sentence structure applying literary minimalism when appropriate.
-        Never use bold or italics.
-        Never use emojis. Use only basic ascii characters.
-        Never use smart quotes or em dashes.
-        `
-        .split('\n')
-        .map(s => s.trim())
-        .join('\n')
-
       const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || window.prompt('Gemini Key')
 
@@ -77,7 +76,7 @@
                 {
                   parts: [
                     {
-                      text: system + '\n\n' + prompt,
+                      text: system.value + '\n\n' + prompt,
                     },
                   ],
                 },

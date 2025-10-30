@@ -98,7 +98,7 @@
       }
 
       if (location.hash.slice(1)) {
-        document.querySelector('textarea').value = location.hash.slice(1)
+        document.querySelector('textarea').value = decodeURIComponent(location.hash.slice(1))
         chat()
       }
 

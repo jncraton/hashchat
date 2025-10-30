@@ -65,13 +65,11 @@ Never use smart quotes or em dashes.
       Response
       <button id="copy">Copy 📋</button>
     </h2>
-    <pre id="response"></pre>
+    <pre id="responseElement"></pre>
 
     <script>
       const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || prompt('Gemini Key')
-
-        const responseElement = document.getElementById('response')
 
         if (!userPrompt.value) {
           alert('Please enter a prompt.')
@@ -181,20 +179,17 @@ Never use smart quotes or em dashes.
       if (location.hash.slice(1)) {
         const [prompt, response] = location.hash.slice(1).split(';')
 
-        document.querySelector('textarea').value = decodeURIComponent(prompt)
+        userPrompt.value = decodeURIComponent(prompt)
 
         if (response) {
-          document.getElementById('response').textContent = decodeURIComponent(response)
+          responseElement.textContent = decodeURIComponent(response)
         } else {
           chat()
         }
       }
 
       const updateHash = () => {
-        location.hash =
-          encodeURIComponent(document.querySelector('textarea').value) +
-          ';' +
-          encodeURIComponent(document.getElementById('response').textContent)
+        location.hash = encodeURIComponent(userPrompt.value) + ';' + encodeURIComponent(responseElement.textContent)
       }
     </script>
   </body>

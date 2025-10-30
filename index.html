@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gemini API Streaming Example</title>
+</head>
+<body>
+  <input type="text" id="apiKey" placeholder="Enter your API Key">
+  <br>
+  <textarea id="prompt" rows="5" cols="50" placeholder="Enter your prompt"></textarea>
+  <br>
+  <button id="generate">Generate</button>
+
+  <h2>Response:</h2>
+  <pre id="response"></pre>
+
+  <script>
+    document.getElementById('generate').addEventListener('click', async () => {
+      const apiKey = document.getElementById('apiKey').value;
+      const prompt = document.getElementById('prompt').value;
+      const responseElement = document.getElementById('response');
+
+      if (!apiKey) {
+        alert('Please enter your API key.');
+        return;
+      }
+
+      if (!prompt) {
+        alert('Please enter a prompt.');
+        return;
+      }
+
+      responseElement.textContent = '';
+
+      const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:streamGenerateContent?alt=sse';
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey,
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: prompt
+              }]
+            }]
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        while (true) {
+          const {
+            done,
+            value
+          } = await reader.read();
+          if (done) {
+            break;
+          }
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+          for (const line of lines) {
+            if (line.startsWith('data:')) {
+              const jsonString = line.substring(5).trim();
+              if (jsonString) {
+                try {
+                  const json = JSON.parse(jsonString);
+                  if (json.candidates && json.candidates[0].content && json.candidates[0].content.parts[0]) {
+                    responseElement.textContent += json.candidates[0].content.parts[0].text;
+                  }
+                } catch (e) {
+                  console.error('Error parsing JSON:', e);
+                }
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        responseElement.textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -88,6 +88,7 @@
                       if (part.codeExecutionResult)
                         responseElement.textContent +=
                           '\n\n## Execution Result\n\n' + part.codeExecutionResult.output + '\n-----\n\n'
+                      updateHash()
                     }
                   } catch (e) {
                     console.error('Error parsing JSON:', e)
@@ -103,7 +104,7 @@
       }
 
       if (location.hash.slice(1)) {
-        document.querySelector('textarea').value = decodeURIComponent(location.hash.slice(1))
+        document.querySelector('textarea').value = decodeURIComponent(location.hash.slice(1).split(';')[0])
         chat()
       }
 
@@ -127,6 +128,13 @@
           return
         }
       })
+
+      const updateHash = () => {
+        location.hash =
+          encodeURIComponent(document.querySelector('textarea').value) +
+          ';' +
+          encodeURIComponent(document.getElementById('response').textContent)
+      }
     </script>
   </body>
 </html>

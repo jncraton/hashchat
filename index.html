@@ -158,7 +158,7 @@ Never use smart quotes or em dashes.
       }
 
       const copyResponse = async () => {
-        await navigator.clipboard.writeText(response.textContent)
+        await navigator.clipboard.writeText(responseElement.textContent)
       }
 
       copy.addEventListener('click', copyResponse)

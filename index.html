@@ -99,8 +99,18 @@
         chat()
       }
 
-      copy.addEventListener('click', async e => {
+      const copyResponse = async () => {
         await navigator.clipboard.writeText(response.textContent)
+      }
+
+      copy.addEventListener('click', copyResponse)
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'c' || event.key === 'C') {
+          if (event.ctrlKey || event.metaKey) {
+            copyResponse()
+          }
+        }
       })
 
       document.querySelector('textarea').addEventListener('keydown', async e => {

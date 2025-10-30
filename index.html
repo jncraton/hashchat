@@ -103,11 +103,6 @@
         }
       }
 
-      if (location.hash.slice(1)) {
-        document.querySelector('textarea').value = decodeURIComponent(location.hash.slice(1).split(';')[0])
-        chat()
-      }
-
       const copyResponse = async () => {
         await navigator.clipboard.writeText(response.textContent)
       }
@@ -128,6 +123,18 @@
           return
         }
       })
+
+      if (location.hash.slice(1)) {
+        const [prompt, response] = location.hash.slice(1).split(';')
+
+        document.querySelector('textarea').value = decodeURIComponent(prompt)
+
+        if (response) {
+          document.getElementById('response').textContent = decodeURIComponent(response)
+        } else {
+          chat()
+        }
+      }
 
       const updateHash = () => {
         location.hash =

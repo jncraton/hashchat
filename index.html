@@ -105,11 +105,9 @@
 
       copy.addEventListener('click', copyResponse)
 
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'c' || event.key === 'C') {
-          if (event.ctrlKey || event.metaKey) {
-            copyResponse()
-          }
+      document.addEventListener('keydown', function (ev) {
+        if ((ev.key === 'c' || ev.key === 'C') && (ev.ctrlKey || ev.metaKey)) {
+          copyResponse()
         }
       })
 

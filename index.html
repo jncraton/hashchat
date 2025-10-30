@@ -59,11 +59,25 @@
               'Content-Type': 'application/json',
               'x-goog-api-key': localStorage.geminiKey,
             },
-            body: `{
-              "contents":[{"parts":[{"text":${JSON.stringify(system + '\n\n' + prompt)}}]}],
-              "tools":[{"url_context":{}}],
-              "generationConfig":{"temperature":0}
-            }`,
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: system + '\n\n' + prompt
+                    }
+                  ]
+                }
+              ],
+              tools: [
+                {
+                  url_context: {}
+                }
+              ],
+              generationConfig: {
+                temperature: 0
+              }
+            }),
           })
 
           if (!response.ok) {
@@ -86,6 +100,7 @@
                 if (jsonString) {
                   try {
                     const json = JSON.parse(jsonString)
+                    console.log(json)
                     if (json.candidates && json.candidates[0].content && json.candidates[0].content.parts[0]) {
                       const part = json.candidates[0].content.parts[0]
                       if (part.text) responseElement.textContent += part.text

@@ -41,6 +41,7 @@
         text-wrap: wrap;
       }
     </style>
+    <script src="minigfm.js"></script>
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
@@ -77,8 +78,11 @@ Never use smart quotes or em dashes.
       </label>
     </details>
     <button id="copy">Copy 📋</button>
-    <details><summary>Response Source</summary>
-    <pre id="responseElement"></pre>
+    <details>
+      <summary>Response Source</summary>
+      <pre id="responseElement"></pre>
+    </details>
+    <article id="responseMarkdownElement"></article>
 
     <script>
       async function encode(text) {
@@ -189,6 +193,7 @@ Never use smart quotes or em dashes.
                         '    $1 ',
                       )
                       responseElement.textContent = responseElement.textContent.replaceAll(/(^\d+\. )[ ]+/gm, '$1')
+                      updateResponse(responseElement.textContent)
                       updateHash()
                     }
                   } catch (e) {
@@ -243,16 +248,22 @@ Never use smart quotes or em dashes.
           userPrompt.value = prompt
 
           if (response) {
-            responseElement.textContent = response
+            updateResponse(response)
           } else {
             chat()
           }
         }
       }
-      init()
+      window.addEventListener('load', init)
 
       const updateHash = async () => {
         location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))
+      }
+
+      const updateResponse = response => {
+        const md = new MiniGFM()
+        responseElement.textContent = response
+        responseMarkdownElement.innerHTML = md.parse(response)
       }
     </script>
   </body>

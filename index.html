@@ -83,55 +83,35 @@ Never use smart quotes or em dashes.
     <pre id="responseElement"></pre>
 
     <script>
-      const algos = {
-        ';': 'deflate-raw',
-        '+': 'url',
-      }
-
       async function encode(text) {
-        let enc = ';'
-
-        if (enc == '+') {
-          return '+' + encodeTitle(text)
-        }
-
-        let algo = algos[enc]
-
         let stream = new Blob([text]).stream()
 
-        if (algo) {
-          stream = stream.pipeThrough(new CompressionStream(algo))
-        }
+        stream = stream.pipeThrough(new CompressionStream('deflate-raw'))
         const res = await new Response(stream)
 
         const blob = await res.blob()
         const buffer = await blob.arrayBuffer()
 
-        return enc + btoa(String.fromCharCode(...new Uint8Array(buffer)))
+        return ';' + btoa(String.fromCharCode(...new Uint8Array(buffer)))
       }
 
       async function decode(text) {
-        let algo = algos[text[0]]
-
-        if (!algo) return decodeURIComponent(text)
-
+        if (text[0] != ';') {
+            console.error("Invalid encoding for text", text)
+            return
+        }
         text = text.slice(1)
-
-        if (algo == 'url') return decodeTitle(text)
 
         const binary = Uint8Array.from(atob(text), c => c.charCodeAt(0))
 
         let stream = new Blob([binary]).stream()
 
-        if (algo) {
-          stream = stream.pipeThrough(new DecompressionStream(algo))
-        }
+        stream = stream.pipeThrough(new DecompressionStream('deflate-raw'))
 
         const res = await new Response(stream)
         const blob = await res.blob()
-        const outText = await blob.text()
 
-        return outText
+        return await blob.text()
       }
 
       const chat = async () => {

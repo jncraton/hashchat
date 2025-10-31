@@ -14,6 +14,10 @@
         resize: none;
       }
 
+      #responseInfo {
+        display: none;
+      }
+
       /* minigfm inserts <br> elements and fails to wrap <li>, so we clean that up */
       br {
         display: none;
@@ -247,9 +251,13 @@
       }
 
       const updateResponse = response => {
-        const md = new MiniGFM()
-        responseElement.textContent = response
-        responseMarkdownElement.innerHTML = md.parse(response)
+        if (response) {
+          const md = new MiniGFM()
+          responseElement.textContent = response
+          responseMarkdownElement.innerHTML = md.parse(response)
+
+          responseInfo.style.display = 'block'
+        }
       }
     </script>
   </body>

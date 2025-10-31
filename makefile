@@ -1,6 +1,6 @@
-all: index.html do.css minigfm.js
+all: index.html do.min.css minigfm.js
 
-do.css:
+do.min.css:
 	wget https://jncraton.github.io/docss/do.min.css
 
 minigfm.js:

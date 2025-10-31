@@ -33,7 +33,7 @@
   <body>
     <main>
       <article id="responseMarkdownElement"></article>
-      <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt" autofocus></textarea></label>
+      <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt"></textarea></label>
       <details>
         <summary>Generation Config</summary>
         <label>
@@ -242,6 +242,8 @@
           } else {
             chat()
           }
+        } else {
+          userPrompt.focus()
         }
       }
       window.addEventListener('load', init)

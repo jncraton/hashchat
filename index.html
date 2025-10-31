@@ -40,6 +40,15 @@
       pre {
         text-wrap: wrap;
       }
+
+      /* minigfm inserts <br> elements and fails to wrap <li>, so we clean that up */
+      br {
+        display: none;
+      }
+
+      li {
+        margin-left: 2em;
+      }
     </style>
     <script src="minigfm.js"></script>
     <link rel="icon" href="favicon.ico" />

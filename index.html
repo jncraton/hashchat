@@ -4,41 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>hashchat</title>
+    <link rel="stylesheet" href="https://jncraton.github.io/docss/do.min.css" />
     <style>
       :root {
-        max-width: 720px;
-        margin: 3em auto;
-        font-family: sans serif;
-        font-size: 16px;
-      }
-
-      button {
-        float: right;
-      }
-
-      label,
-      input,
-      select {
-        display: block;
-      }
-
-      label {
-        margin-bottom: 0.5em;
-      }
-
-      input {
-        width: 8em;
+        --w: 960px;
       }
 
       textarea {
-        width: 100%;
         resize: none;
-        font-size: 1rem;
-        box-sizing: border-box;
-      }
-
-      pre {
-        text-wrap: wrap;
       }
 
       /* minigfm inserts <br> elements and fails to wrap <li>, so we clean that up */
@@ -54,44 +27,46 @@
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt" autofocus></textarea></label>
-    <details>
-      <summary>Config</summary>
-      <label>
-        Model
-        <select id="model" autocomplete="off">
-          <option value="gemini-pro-latest">Gemini Pro Latest</option>
-          <option value="gemini-flash-latest" selected>Gemini Flash Latest</option>
-          <option value="gemini-flash-lite-latest">Gemini Flash Lite Latest</option>
-        </select>
-      </label>
-      <label>
-        Temperature
-        <input id="temperature" type="number" min="0" max="2" step=".1" value="0" />
-      </label>
-      <label>
-        Thinking Tokens
-        <input id="thinking" type="number" min="0" max="32768" step="1024" value="0" />
-      </label>
-      <label>
-        System
-        <textarea id="system" rows="5" autocomplete="off">
-Respond avoiding overly complex sentence structure.
+    <main>
+      <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt" autofocus></textarea></label>
+      <article id="responseMarkdownElement"></article>
+      <details>
+        <summary>Generation Config</summary>
+        <label>
+          Model
+          <select id="model" autocomplete="off">
+            <option value="gemini-pro-latest">Gemini Pro Latest</option>
+            <option value="gemini-flash-latest" selected>Gemini Flash Latest</option>
+            <option value="gemini-flash-lite-latest">Gemini Flash Lite Latest</option>
+          </select>
+        </label>
+        <label>
+          Temperature
+          <input id="temperature" type="number" min="0" max="2" step=".1" value="0" />
+        </label>
+        <label>
+          Thinking Tokens
+          <input id="thinking" type="number" min="0" max="32768" step="1024" value="0" />
+        </label>
+        <label>
+          System
+          <textarea id="system" rows="5" autocomplete="off">
+  Respond avoiding overly complex sentence structure.
 
-Never use emojis. Use only basic ascii characters.
+  Never use emojis. Use only basic ascii characters.
 
-Never use **bold** or *italics*, even for headings and list items. Can use other markdown formatting including blockquotes and fenced code blocks as appropriate.
+  Never use **bold** or *italics*, even for headings and list items. Can use other markdown formatting including blockquotes and fenced code blocks as appropriate.
 
-Never use smart quotes or em dashes.
-        </textarea>
-      </label>
-    </details>
-    <button id="copy">Copy 📋</button>
-    <details>
-      <summary>Response Source</summary>
-      <pre id="responseElement"></pre>
-    </details>
-    <article id="responseMarkdownElement"></article>
+  Never use smart quotes or em dashes.
+          </textarea>
+        </label>
+      </details>
+      <details>
+        <summary>Response Source</summary>
+        <pre id="responseElement"></pre>
+      </details>
+      <button id="copy">Copy Response Source 📋</button>
+    </main>
 
     <script>
       async function encode(text) {

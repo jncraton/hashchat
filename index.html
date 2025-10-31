@@ -83,6 +83,57 @@ Never use smart quotes or em dashes.
     <pre id="responseElement"></pre>
 
     <script>
+      const algos = {
+        ';': 'deflate-raw',
+        '+': 'url',
+      }
+
+      async function encode(text) {
+        let enc = ';'
+
+        if (enc == '+') {
+          return '+' + encodeTitle(text)
+        }
+
+        let algo = algos[enc]
+
+        let stream = new Blob([text]).stream()
+
+        if (algo) {
+          stream = stream.pipeThrough(new CompressionStream(algo))
+        }
+        const res = await new Response(stream)
+
+        const blob = await res.blob()
+        const buffer = await blob.arrayBuffer()
+
+        return enc + btoa(String.fromCharCode(...new Uint8Array(buffer)))
+      }
+
+      async function decode(text) {
+        let algo = algos[text[0]]
+
+        if (!algo) return decodeURIComponent(text)
+
+        text = text.slice(1)
+
+        if (algo == 'url') return decodeTitle(text)
+
+        const binary = Uint8Array.from(atob(text), c => c.charCodeAt(0))
+
+        let stream = new Blob([binary]).stream()
+
+        if (algo) {
+          stream = stream.pipeThrough(new DecompressionStream(algo))
+        }
+
+        const res = await new Response(stream)
+        const blob = await res.blob()
+        const outText = await blob.text()
+
+        return outText
+      }
+
       const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || prompt('Gemini Key')
 
@@ -196,20 +247,34 @@ Never use smart quotes or em dashes.
         }
       })
 
-      if (location.hash.slice(1)) {
-        const [prompt, response] = location.hash.slice(1).split(';')
+      async function init() {
+        if (location.hash.slice(1)) {
+          let prompt
+          let response
 
-        userPrompt.value = decodeURIComponent(prompt)
+          if (location.hash[1] == ';') {
+            let hash = await decode(location.hash.slice(1))
+            ;[prompt, response] = JSON.parse(hash)
+          } else {
+            ;[prompt, response] = location.hash.slice(1).split(';')
 
-        if (response) {
-          responseElement.textContent = decodeURIComponent(response)
-        } else {
-          chat()
+            prompt = decodeURIComponent(prompt)
+            response = response ? decodeURIComponent(response) : null
+          }
+
+          userPrompt.value = prompt
+
+          if (response) {
+            responseElement.textContent = response
+          } else {
+            chat()
+          }
         }
       }
+      init()
 
-      const updateHash = () => {
-        location.hash = encodeURIComponent(userPrompt.value) + ';' + encodeURIComponent(responseElement.textContent)
+      const updateHash = async () => {
+        location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))
       }
     </script>
   </body>

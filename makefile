@@ -1,7 +1,10 @@
-all: index.html do.css
+all: index.html do.css minigfm.js
 
 do.css:
 	wget https://jncraton.github.io/docss/do.min.css
+
+minigfm.js:
+	wget -O $@ https://cdn.jsdelivr.net/npm/@oblivionocean/minigfm@latest/dist/index.min.js
 
 lint:
 	npx prettier@3.6.2 --check .
@@ -19,4 +22,4 @@ dev-deps:
 	pip3 install pytest-playwright==0.7.1 && playwright install
 
 clean:
-	rm -rf .pytest_cache __pycache__ favicon* do.min.css
+	rm -rf .pytest_cache __pycache__ favicon* do.min.css minigfm.js

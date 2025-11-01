@@ -178,11 +178,7 @@
                       if (part.codeExecutionResult)
                         responseElement.textContent +=
                           '\n\n## Execution Result\n\n' + part.codeExecutionResult.output + '\n-----\n\n'
-                      responseElement.textContent = responseElement.textContent.replaceAll(
-                        /^    ([\*\-])   /gm,
-                        '    $1 ',
-                      )
-                      responseElement.textContent = responseElement.textContent.replaceAll(/(^\d+\. )[ ]+/gm, '$1')
+
                       updateResponse(responseElement.textContent)
                       updateHash()
                     }

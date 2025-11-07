@@ -146,7 +146,8 @@ Include exercises and discussion questions throughout the presentation. Do not p
           <summary>Response Source</summary>
           <pre id="responseElement"></pre>
         </details>
-        <button id="copy">Copy Response Source 📋</button>
+        <button id="copyBtn">Copy Response Source 📋</button>
+        <button id="presentBtn">Present</button>
       </section>
     </main>
     <div class="reveal">
@@ -291,24 +292,25 @@ Include exercises and discussion questions throughout the presentation. Do not p
           console.error('Error:', error)
           responseElement.textContent = `Error: ${error.message}`
         }
-
-        if (userPrompt.value.includes('revealjs')) {
-          let deckHTML = responseMarkdownElement.innerHTML
-          deckHTML = deckHTML.replaceAll('<h2>', '</section><section><h2>')
-          deckHTML = `<section>${deckHTML}</section>`
-          document.querySelector('.slides').innerHTML = deckHTML
-          let deck = new Reveal({})
-          deck.initialize()
-          document.querySelector('main').style.display = 'none'
-          console.log('Slides initialized')
-        }
       }
 
       const copyResponse = async () => {
         await navigator.clipboard.writeText(responseElement.textContent)
       }
 
-      copy.addEventListener('click', copyResponse)
+      const present = () => {
+        let deckHTML = responseMarkdownElement.innerHTML
+        deckHTML = deckHTML.replaceAll('<h2>', '</section><section><h2>')
+        deckHTML = `<section>${deckHTML}</section>`
+        document.querySelector('.slides').innerHTML = deckHTML
+        let deck = new Reveal({})
+        deck.initialize()
+        document.querySelector('main').style.display = 'none'
+        console.log('Slides initialized')
+      }
+
+      copyBtn.addEventListener('click', copyResponse)
+      presentBtn.addEventListener('click', present)
 
       document.addEventListener('keydown', function (ev) {
         if ((ev.key === 'c' || ev.key === 'C') && (ev.ctrlKey || ev.metaKey)) {

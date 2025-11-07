@@ -12,7 +12,7 @@ lint:
 format:
 	npx prettier@3.6.2 --write .
 
-test: index.html
+test: index.html lint
 	pytest --browser firefox --browser chromium
 
 favicon.ico:

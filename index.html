@@ -299,7 +299,7 @@ Synthesis exercise
       const present = () => {
         let deckHTML = responseMarkdownElement.innerHTML
         deckHTML = deckHTML.replaceAll('<h2>', '</section><section><h2>')
-        deckHTML = deckHTML.replaceAll('<hr>', '</section><section><hr>')
+        deckHTML = deckHTML.replaceAll('<hr>', '</section><section>')
         deckHTML = `<section>${deckHTML}</section>`
         document.querySelector('.slides').innerHTML = deckHTML
         let deck = new Reveal({})

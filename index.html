@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>hashchat</title>
+    <link rel="stylesheet" href="reveal.js/dist/reset.css" />
     <link rel="stylesheet" href="do.min.css" />
+    <link rel="stylesheet" href="reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal.js/dist/theme/white.css" />
     <style>
       :root {
         --w: 960px;
@@ -146,6 +149,9 @@ Include exercises and discussion questions throughout the presentation. Do not p
         <button id="copy">Copy Response Source 📋</button>
       </section>
     </main>
+    <div class="reveal">
+      <div class="slides"></div>
+    </div>
 
     <script>
       async function encode(text) {
@@ -285,6 +291,17 @@ Include exercises and discussion questions throughout the presentation. Do not p
           console.error('Error:', error)
           responseElement.textContent = `Error: ${error.message}`
         }
+
+        if (userPrompt.value.includes('revealjs')) {
+          let deckHTML = responseMarkdownElement.innerHTML
+          deckHTML = deckHTML.replaceAll('<h2>', '</section><section><h2>')
+          deckHTML = `<section>${deckHTML}</section>`
+          document.querySelector('.slides').innerHTML = deckHTML
+          let deck = new Reveal({})
+          deck.initialize()
+          document.querySelector('main').style.display = 'none'
+          console.log('Slides initialized')
+        }
       }
 
       const copyResponse = async () => {
@@ -350,5 +367,6 @@ Include exercises and discussion questions throughout the presentation. Do not p
         }
       }
     </script>
+    <script src="reveal.js/dist/reveal.js"></script>
   </body>
 </html>

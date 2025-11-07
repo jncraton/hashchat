@@ -300,9 +300,6 @@ Synthesis exercise
         let deckHTML = responseMarkdownElement.innerHTML
         deckHTML = deckHTML.replaceAll('<h2>', '</section><section><h2>')
         deckHTML = deckHTML.replaceAll('<hr>', '</section><section>')
-        deckHTML = deckHTML.replaceAll('<li>', '<ul><li>')
-        deckHTML = deckHTML.replaceAll('</li>', '</li></ul>')
-        deckHTML = deckHTML.replaceAll(/<\/ul>\s*<ul>/gm, '')
         deckHTML = `<section>${deckHTML}</section>`
         document.querySelector('.slides').innerHTML = deckHTML
         let deck = new Reveal({})
@@ -365,7 +362,13 @@ Synthesis exercise
         if (response) {
           const md = new MiniGFM()
           responseElement.textContent = response
-          responseMarkdownElement.innerHTML = md.parse(response)
+
+          let html = md.parse(response)
+          html = html.replaceAll('<li>', '<ul><li>')
+          html = html.replaceAll('</li>', '</li></ul>')
+          html = html.replaceAll(/<\/ul>\s*<ul>/gm, '')
+
+          responseMarkdownElement.innerHTML = html
 
           responseInfo.style.display = 'block'
         }

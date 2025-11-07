@@ -300,6 +300,8 @@ Synthesis exercise
         let deckHTML = responseMarkdownElement.innerHTML
         deckHTML = deckHTML.replaceAll('<h2>', '</section><section><h2>')
         deckHTML = deckHTML.replaceAll('<hr>', '</section><section>')
+        deckHTML = deckHTML.replaceAll('<li>', '<ul><li>')
+        deckHTML = deckHTML.replaceAll('</li>', '</li></ul>')
         deckHTML = `<section>${deckHTML}</section>`
         document.querySelector('.slides').innerHTML = deckHTML
         let deck = new Reveal({})

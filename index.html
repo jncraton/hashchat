@@ -150,6 +150,8 @@
 
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${model.value}:streamGenerateContent?alt=sse`
 
+        sysPrompt = sysPrompt.replace(/^[ \t]+|[ \t]+$/gm, '')
+
         console.log(sysPrompt)
 
         try {

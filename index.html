@@ -158,11 +158,18 @@
               'x-goog-api-key': localStorage.geminiKey,
             },
             body: JSON.stringify({
+              system_instruction: {
+                parts: [
+                  {
+                    text: sysPrompt,
+                  },
+                ],
+              },
               contents: [
                 {
                   parts: [
                     {
-                      text: sysPrompt + '\n\n' + userPrompt.value,
+                      text: userPrompt.value,
                     },
                   ],
                 },

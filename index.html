@@ -42,28 +42,28 @@
     <main>
       <article id="responseMarkdownElement"></article>
       <section>
-      <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt"></textarea></label>
-      <details>
-        <summary>Generation Config</summary>
-        <label>
-          Model
-          <select id="model" autocomplete="off">
-            <option value="gemini-pro-latest">Gemini Pro Latest</option>
-            <option value="gemini-flash-latest" selected>Gemini Flash Latest</option>
-            <option value="gemini-flash-lite-latest">Gemini Flash Lite Latest</option>
-          </select>
-        </label>
-        <label>
-          Temperature
-          <input id="temperature" type="number" min="0" max="2" step=".1" value="0" />
-        </label>
-        <label>
-          Thinking Tokens
-          <input id="thinking" type="number" min="0" max="32768" step="1024" value="0" />
-        </label>
-        <label>
-          System
-          <textarea id="system" rows="5" autocomplete="off">
+        <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt"></textarea></label>
+        <details>
+          <summary>Generation Config</summary>
+          <label>
+            Model
+            <select id="model" autocomplete="off">
+              <option value="gemini-pro-latest">Gemini Pro Latest</option>
+              <option value="gemini-flash-latest" selected>Gemini Flash Latest</option>
+              <option value="gemini-flash-lite-latest">Gemini Flash Lite Latest</option>
+            </select>
+          </label>
+          <label>
+            Temperature
+            <input id="temperature" type="number" min="0" max="2" step=".1" value="0" />
+          </label>
+          <label>
+            Thinking Tokens
+            <input id="thinking" type="number" min="0" max="32768" step="1024" value="0" />
+          </label>
+          <label>
+            System
+            <textarea id="system" rows="5" autocomplete="off">
 Respond avoiding overly complex sentence structure.
 
 Never use emojis. Use only basic ascii characters.
@@ -142,9 +142,10 @@ Application exercise
 Synthesis exercise
 ```
 {% endif %}
-          </textarea>
-        </label>
-      </details>
+          </textarea
+            >
+          </label>
+        </details>
       </section>
       <section id="responseInfo">
         <details>

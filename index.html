@@ -28,11 +28,6 @@
       li {
         margin-left: 2em;
       }
-
-      .reveal button {
-        width: revert;
-        box-shadow: none;
-      }
     </style>
     <script src="minigfm.js"></script>
     <link rel="icon" href="favicon.ico" />
@@ -312,6 +307,7 @@ Synthesis exercise
         let deck = new Reveal({})
         deck.initialize()
         document.querySelector('main').style.display = 'none'
+        document.styleSheets[0].disabled = true
         console.log('Slides initialized')
       }
 

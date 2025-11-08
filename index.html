@@ -311,6 +311,16 @@ Synthesis exercise
       copyBtn.addEventListener('click', copyResponse)
       presentBtn.addEventListener('click', present)
 
+      addEventListener('keydown', function (e) {
+        const isCtrl = e.ctrlKey || e.metaKey
+        const key = e.key || String.fromCharCode(e.keyCode)
+
+        if (isCtrl && e.key === 'F5') {
+          e.preventDefault()
+          present()
+        }
+      })
+
       document.addEventListener('keydown', function (ev) {
         if ((ev.key === 'c' || ev.key === 'C') && (ev.ctrlKey || ev.metaKey)) {
           copyResponse()

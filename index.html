@@ -26,7 +26,7 @@
         display: none;
       }
     </style>
-    <script src="minigfm.js"></script>
+    <script src="ugfm.min.js"></script>
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
@@ -370,15 +370,10 @@ Synthesis exercise
 
       const updateResponse = response => {
         if (response) {
-          const md = new MiniGFM()
           responseElement.textContent = response
 
-          let html = md.parse(response)
-          html = html.replaceAll('<li>', '<ul><li>')
-          html = html.replaceAll('</li>', '</li></ul>')
-          html = html.replaceAll(/<\/ul>\s*<ul>/gm, '')
-
-          responseMarkdownElement.innerHTML = html
+          responseMarkdownElement.innerHTML = ''
+          responseMarkdownElement.append(...ugfm(response).childNodes)
 
           responseInfo.style.display = 'block'
         }

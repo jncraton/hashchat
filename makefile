@@ -1,10 +1,10 @@
-all: index.html do.min.css minigfm.js reveal.js
+all: index.html do.min.css ugfm.min.js reveal.js
 
 do.min.css:
 	wget https://jncraton.github.io/docss/do.min.css
 
-minigfm.js:
-	wget -O $@ https://cdn.jsdelivr.net/npm/@oblivionocean/minigfm@latest/dist/index.min.js
+ugfm.min.js:
+	wget -O $@ https://jncraton.github.io/ugfm/ugfm.min.js
 
 lint:
 	npx prettier@3.6.2 --check .

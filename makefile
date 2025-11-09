@@ -1,7 +1,7 @@
 all: index.html do.min.css ugfm.min.js reveal.js
 
 do.min.css:
-	wget https://jncraton.github.io/docss/do.min.css
+	wget https://github.com/jncraton/docss/releases/download/v0.2.0/do.min.css
 
 ugfm.min.js:
 	wget -O $@ https://github.com/jncraton/ugfm/releases/download/v0.1.2/ugfm.min.js

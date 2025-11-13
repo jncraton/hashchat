@@ -74,8 +74,6 @@ Never use **bold** or *italics*, even for headings and list items. Can use other
 
 Never use smart quotes or em dashes.
 
-Always backslash escape literal dollar signs.
-
 {% if lecture or reflection %}
 ## Persona
 
@@ -349,7 +347,20 @@ Synthesis exercise
         deckHTML = deckHTML.replaceAll('<hr>', '</section><section>')
         deckHTML = `<section>${deckHTML}</section>`
         document.querySelector('.slides').innerHTML = deckHTML
-        let deck = new Reveal({ plugins: [RevealMath.KaTeX] })
+        let deck = new Reveal({
+          katex: {
+            version: 'latest',
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true },
+            ],
+            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          },
+
+          plugins: [RevealMath.KaTeX],
+        })
         deck.initialize()
         document.querySelector('main').style.display = 'none'
         document.styleSheets[0].disabled = true

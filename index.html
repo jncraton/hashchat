@@ -198,7 +198,7 @@ Synthesis exercise
         let sysPrompt = system.value.trim()
         sysPrompt = sysPrompt.replace(/{% if (.*?) %}(.*?){% endif %}/gms, (_, condition, src) => {
           for (kw of condition.split(' or ')) {
-            if (userPrompt.value.toLowerCase().includes(kw)) {
+            if (userPrompt.value.slice(0, 100).toLowerCase().includes(kw)) {
               console.log(`Including ${kw} in prompt`)
               return src
             }

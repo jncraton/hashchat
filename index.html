@@ -31,7 +31,7 @@
       }
 
       body {
-        margin:0;
+        margin: 0;
       }
 
       nav {
@@ -268,7 +268,7 @@ Synthesis exercise
         </details>
       </section>
     </footer>
-    <div class="reveal" style='display:none;'>
+    <div class="reveal" style="display: none">
       <div class="slides"></div>
     </div>
     <script>
@@ -432,7 +432,7 @@ Synthesis exercise
         document.querySelector('.slides').innerHTML = deckHTML
         let deck = new Reveal({})
         deck.initialize()
-        document.querySelectorAll('header,main,footer').forEach(e => e.style.display = 'none')
+        document.querySelectorAll('header,main,footer').forEach(e => (e.style.display = 'none'))
         document.querySelector('.reveal').style.display = 'block'
         document.styleSheets[0].disabled = true
         console.log('Slides initialized')

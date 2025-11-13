@@ -335,7 +335,7 @@ Synthesis exercise
         deckHTML = deckHTML.replaceAll('<hr>', '</section><section>')
         deckHTML = `<section>${deckHTML}</section>`
         document.querySelector('.slides').innerHTML = deckHTML
-        let deck = new Reveal({})
+        let deck = new Reveal({ plugins: [RevealMath.KaTeX] })
         deck.initialize()
         document.querySelector('main').style.display = 'none'
         document.styleSheets[0].disabled = true
@@ -414,5 +414,6 @@ Synthesis exercise
       }
     </script>
     <script src="reveal.js/dist/reveal.js"></script>
+    <script src="reveal.js/plugin/math/math.js"></script>
   </body>
 </html>

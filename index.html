@@ -81,7 +81,7 @@ Do not wrap up with a generic "Questions?" or review slide.
 Include exercises and discussion questions throughout the presentation. Do not put them all together.
 {% endif %}
 
-{% if revealjs %}
+{% if revealjs or slides %}
 ## Formatting
 
 The slides should be in markdown format that will be used to generate a reveal.js presentation using pandoc.
@@ -196,13 +196,14 @@ Synthesis exercise
         responseElement.textContent = ''
 
         let sysPrompt = system.value.trim()
-        sysPrompt = sysPrompt.replace(/{% if (.*?) %}(.*?){% endif %}/gms, (_, kw, src) => {
-          if (userPrompt.value.toLowerCase().includes(kw)) {
-            console.log(`Including ${kw} in prompt`)
-            return src
-          } else {
-            return ''
+        sysPrompt = sysPrompt.replace(/{% if (.*?) %}(.*?){% endif %}/gms, (_, condition, src) => {
+          for (kw of condition.split(' or ')) {
+            if (userPrompt.value.toLowerCase().includes(kw)) {
+              console.log(`Including ${kw} in prompt`)
+              return src
+            }
           }
+          return ''
         })
 
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${model.value}:streamGenerateContent?alt=sse`

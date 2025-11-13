@@ -30,6 +30,10 @@
         --r-background-color: #fff;
       }
 
+      body {
+        margin:0;
+      }
+
       nav {
         display: flex;
         justify-content: flex-end;
@@ -81,15 +85,20 @@
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <main>
-      <nav>
+    <header>
+          <nav>
         <button id="copyBtn">📋&nbsp;Copy</button>
         <button id="regenerateBtn">♻️&nbsp;Regenerate</button>
         <button id="reflectBtn">💡&nbsp;Reflect</button>
         <button id="quizBtn">✏️&nbsp;Quiz</button>
         <button id="presentBtn">📽️&nbsp;Present</button>
       </nav>
+
+    </header>
+    <main>
       <article id="responseMarkdownElement"></article>
+    </main>
+    <footer>
       <section>
         <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt"></textarea></label>
         <details>
@@ -258,11 +267,10 @@ Synthesis exercise
           <pre id="responseElement"></pre>
         </details>
       </section>
-    </main>
-    <div class="reveal">
+    </footer>
+    <div class="reveal" style='display:none;'>
       <div class="slides"></div>
     </div>
-
     <script>
       async function encode(text) {
         let stream = new Blob([text]).stream()
@@ -424,7 +432,8 @@ Synthesis exercise
         document.querySelector('.slides').innerHTML = deckHTML
         let deck = new Reveal({})
         deck.initialize()
-        document.querySelector('main').style.display = 'none'
+        document.querySelectorAll('header,main,footer').forEach(e => e.style.display = 'none')
+        document.querySelector('.reveal').style.display = 'block'
         document.styleSheets[0].disabled = true
         console.log('Slides initialized')
       }

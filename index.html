@@ -390,8 +390,7 @@ Synthesis exercise
       }
 
       const quiz = () => {
-        userPrompt.value = `Generate 10 multiple choice quiz questions:\n\n${responseElement.textContent}`
-        chat()
+        open('#' + encodeURIComponent(`Generate 10 multiple choice quiz questions based on the following:\n\n${responseElement.textContent}`), '_blank')
       }
 
       copyBtn.addEventListener('click', copyResponse)

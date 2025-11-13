@@ -89,7 +89,7 @@ Never use **bold** or *italics*, even for headings and list items. Can use other
 
 Never use smart quotes or em dashes.
 
-Use dollar sign characters ($) only to delmit math. Use small dollar signs (﹩) in place of literal dollar signs ($).
+Always bold dollar amounts: **$2**
 
 {% if lecture or reflection %}
 ## Persona
@@ -447,6 +447,7 @@ Synthesis exercise
               { left: '\\[', right: '\\]', display: true },
             ],
             throwOnError: false,
+            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'em', 'strong'],
           })
         }
       }

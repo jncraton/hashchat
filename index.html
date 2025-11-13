@@ -271,7 +271,7 @@ Synthesis exercise
       <section id="responseInfo">
         <details>
           <summary>Response Source</summary>
-          <pre id="responseElement"></pre>
+          <textarea id="responseElement"></textarea>
         </details>
       </section>
     </footer>
@@ -478,6 +478,33 @@ Synthesis exercise
       reflectBtn.addEventListener('click', reflect)
       quizBtn.addEventListener('click', quiz)
 
+      const updateHash = async () => {
+        location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))
+      }
+
+      const updateResponse = response => {
+        if (response) {
+          responseElement.textContent = response
+
+          responseMarkdownElement.innerHTML = ''
+          responseMarkdownElement.append(...ugfm(response).childNodes)
+
+          responseInfo.style.display = 'block'
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true },
+            ],
+            throwOnError: false,
+            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'em', 'strong'],
+          })
+        }
+      }
+
+      responseElement.addEventListener('input', e => updateResponse(e.target.value))
+
       addEventListener('keydown', function (e) {
         const isCtrl = e.ctrlKey || e.metaKey
         const key = e.key || String.fromCharCode(e.keyCode)
@@ -530,31 +557,6 @@ Synthesis exercise
         }
       }
       window.addEventListener('load', init)
-
-      const updateHash = async () => {
-        location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))
-      }
-
-      const updateResponse = response => {
-        if (response) {
-          responseElement.textContent = response
-
-          responseMarkdownElement.innerHTML = ''
-          responseMarkdownElement.append(...ugfm(response).childNodes)
-
-          responseInfo.style.display = 'block'
-          renderMathInElement(document.body, {
-            delimiters: [
-              { left: '$$', right: '$$', display: true },
-              { left: '$', right: '$', display: false },
-              { left: '\\(', right: '\\)', display: false },
-              { left: '\\[', right: '\\]', display: true },
-            ],
-            throwOnError: false,
-            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'em', 'strong'],
-          })
-        }
-      }
     </script>
     <script src="reveal.js/dist/reveal.js"></script>
   </body>

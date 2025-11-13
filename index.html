@@ -487,7 +487,7 @@ Synthesis exercise
       const updateResponse = response => {
         if (response) {
           responseElement.textContent = response
-          responseElement.style.height = responseElement.scrollHeight + "px"
+          responseElement.style.height = responseElement.scrollHeight + 'px'
 
           responseMarkdownElement.innerHTML = ''
           responseMarkdownElement.append(...ugfm(response).childNodes)
@@ -506,6 +506,7 @@ Synthesis exercise
       }
 
       responseElement.addEventListener('input', e => updateResponse(e.target.value))
+      document.querySelector('#raw').addEventListener('click', e => updateResponse(responseElement.value))
 
       addEventListener('keydown', function (e) {
         const isCtrl = e.ctrlKey || e.metaKey

@@ -55,9 +55,14 @@
         resize: none;
       }
 
-      #responseInfo {
+      input:checked ~ *:nth-of-type(1) {
         display: none;
       }
+
+      input:not(:checked) ~ *:nth-of-type(2) {
+        display: none;
+      }
+
       .loader {
         width: 100%;
         height: 12px;
@@ -103,7 +108,10 @@
       </nav>
     </header>
     <main>
+      <label for="raw">Raw Output</label>
+      <input type="checkbox" id="raw" />
       <article id="responseMarkdownElement"></article>
+      <article><textarea id="responseElement" rows="120"></textarea></article>
     </main>
     <footer>
       <section>
@@ -266,12 +274,6 @@ Synthesis exercise
           </textarea
             >
           </label>
-        </details>
-      </section>
-      <section id="responseInfo">
-        <details>
-          <summary>Response Source</summary>
-          <textarea id="responseElement"></textarea>
         </details>
       </section>
     </footer>
@@ -489,7 +491,6 @@ Synthesis exercise
           responseMarkdownElement.innerHTML = ''
           responseMarkdownElement.append(...ugfm(response).childNodes)
 
-          responseInfo.style.display = 'block'
           renderMathInElement(document.body, {
             delimiters: [
               { left: '$$', right: '$$', display: true },
@@ -521,7 +522,7 @@ Synthesis exercise
         }
       })
 
-      document.querySelector('textarea').addEventListener('keydown', async e => {
+      document.querySelector('#userPrompt').addEventListener('keydown', async e => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault()
           chat()

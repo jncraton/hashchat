@@ -139,7 +139,7 @@ Questions should be no more than 30 words. Appropriate responses should be no mo
 If the provided context include code, reflection questions may include coding tasks, but some should still be natural language reflection without code.
 {% endif %}
 
-{% if choice %}
+{% if choice or quiz %}
 Produce multiple choice questions with four possible answers and two alternate distractors. The first answer should aways be the correct option. A variety of questions should be provided focusing different levels of Bloom's revised taxonomy (remember, understand, apply, analyze, evaluate, create).
 
 Output format should look something like this for each question:
@@ -389,8 +389,14 @@ Synthesis exercise
         console.log('Slides initialized')
       }
 
+      const quiz = () => {
+        userPrompt.value = `Generate 10 multiple choice quiz questions:\n\n${responseElement.textContent}`
+        chat()
+      }
+
       copyBtn.addEventListener('click', copyResponse)
       presentBtn.addEventListener('click', present)
+      quizBtn.addEventListener('click', quiz)
 
       addEventListener('keydown', function (e) {
         const isCtrl = e.ctrlKey || e.metaKey

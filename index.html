@@ -15,6 +15,11 @@
         --r-background-color: #fff;
       }
 
+      nav {
+        display: flex;
+        gap: 1em;
+      }
+
       textarea {
         resize: none;
       }
@@ -28,6 +33,10 @@
   </head>
   <body>
     <main>
+      <nav>
+        <button id="copyBtn">Copy 📋</button>
+        <button id="presentBtn">Present</button>
+      </nav>
       <article id="responseMarkdownElement"></article>
       <section>
         <label>Prompt<textarea id="userPrompt" rows="5" placeholder="Enter your prompt"></textarea></label>
@@ -176,8 +185,6 @@ Synthesis exercise
           <summary>Response Source</summary>
           <pre id="responseElement"></pre>
         </details>
-        <button id="copyBtn">Copy Response Source 📋</button>
-        <button id="presentBtn">Present</button>
       </section>
     </main>
     <div class="reveal">

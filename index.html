@@ -487,6 +487,7 @@ Synthesis exercise
       const updateResponse = response => {
         if (response) {
           responseElement.textContent = response
+          responseElement.style.height = responseElement.scrollHeight + "px"
 
           responseMarkdownElement.innerHTML = ''
           responseMarkdownElement.append(...ugfm(response).childNodes)

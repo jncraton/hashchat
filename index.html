@@ -390,12 +390,17 @@ Synthesis exercise
         console.log('Slides initialized')
       }
 
+      const reflect = () => {
+        open('#' + encodeURIComponent(`Generate 10 reflection questions based on the following:\n\n${responseElement.textContent}`), '_blank')
+      }
+
       const quiz = () => {
         open('#' + encodeURIComponent(`Generate 10 multiple choice quiz questions based on the following:\n\n${responseElement.textContent}`), '_blank')
       }
 
       copyBtn.addEventListener('click', copyResponse)
       presentBtn.addEventListener('click', present)
+      reflectBtn.addEventListener('click', reflect)
       quizBtn.addEventListener('click', quiz)
 
       addEventListener('keydown', function (e) {

@@ -360,6 +360,11 @@ Synthesis exercise
           })
 
           if (!response.ok) {
+            if (response.status == '400' || response.status == '403') {
+              responseMarkdownElement.innerHTML =
+                '<h1>API Error</h1><h2>Bad Request</h2>Retry after providing new API key.'
+              localStorage.geminiKey = ''
+            }
             throw new Error(`HTTP error! status: ${response.status}`)
           }
 

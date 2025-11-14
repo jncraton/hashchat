@@ -118,7 +118,7 @@
     <main>
       <label for="raw">Raw Output <input type="checkbox" id="raw" /></label>
       <article id="responseMarkdownElement"></article>
-      <article><textarea id="responseElement" rows="120"></textarea></article>
+      <article><pre id="responseElement" contenteditable></pre></article>
     </main>
     <footer>
       <section>
@@ -492,7 +492,6 @@ Synthesis exercise
       }
 
       const updateResponse = response => {
-        responseElement.style.height = responseElement.scrollHeight + 'px'
         if (response) {
           responseElement.textContent = response
 
@@ -513,7 +512,7 @@ Synthesis exercise
       }
 
       responseElement.addEventListener('input', e => updateResponse(e.target.value))
-      document.querySelector('#raw').addEventListener('click', _ => updateResponse(responseElement.value))
+      document.querySelector('#raw').addEventListener('click', _ => updateResponse(responseElement.textContent))
 
       addEventListener('keydown', function (e) {
         const isCtrl = e.ctrlKey || e.metaKey

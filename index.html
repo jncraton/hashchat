@@ -57,15 +57,11 @@
         resize: none;
       }
 
-      input:checked ~ *:nth-of-type(1) {
+      label:has(:checked) ~ *:nth-of-type(1) {
         display: none;
       }
 
-      input:not(:checked) ~ *:nth-of-type(2) {
-        display: none;
-      }
-
-      #raw {
+      label:not(:has(:checked)) ~ *:nth-of-type(2) {
         display: none;
       }
 
@@ -120,8 +116,7 @@
       </nav>
     </header>
     <main>
-      <label for="raw">Toggle Rich Output</label>
-      <input type="checkbox" id="raw" />
+      <label for="raw">Rich Output <input type="checkbox" id="raw" /></label>
       <article id="responseMarkdownElement"></article>
       <article><textarea id="responseElement" rows="120"></textarea></article>
     </main>

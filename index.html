@@ -371,6 +371,7 @@ Synthesis exercise
               generationConfig: {
                 thinkingConfig: {
                   thinkingBudget: thinking.value,
+                  includeThoughts: true,
                 },
                 temperature: temperature.value,
               },
@@ -407,7 +408,13 @@ Synthesis exercise
                     console.log(json)
                     if (json.candidates && json.candidates[0].content && json.candidates[0].content.parts[0]) {
                       const part = json.candidates[0].content.parts[0]
-                      if (part.text) responseElement.textContent += part.text
+                      if (part.text) {
+                        console.log(part.text)
+
+                        if (!part.thought) {
+                          responseElement.textContent += part.text
+                        }
+                      }
                       if (part.executableCode)
                         responseElement.textContent += '\n\n## Executable Code\n\n' + part.executableCode.code
                       if (part.codeExecutionResult)

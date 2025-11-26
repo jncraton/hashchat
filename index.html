@@ -90,16 +90,6 @@
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <header>
-      <nav>
-        <button id="clearBtn">🧹&nbsp;Clear</button>
-        <button id="copyBtn">📋&nbsp;Copy</button>
-        <button id="regenerateBtn">♻️&nbsp;Regenerate</button>
-        <button id="reflectBtn">💡&nbsp;Reflect</button>
-        <button id="quizBtn">✏️&nbsp;Quiz</button>
-        <button id="presentBtn">📽️&nbsp;Present</button>
-      </nav>
-    </header>
     <main>
       <label for="raw">Raw Output <input type="checkbox" id="raw" /></label>
       <article id="responseMarkdownElement"></article>
@@ -307,12 +297,6 @@ Synthesis exercise
         return await blob.text()
       }
 
-      const clear = () => {
-        responseMarkdownElement.innerHTML = ''
-        responseElement.textContent = ''
-        userPrompt.focus()
-      }
-
       const chat = async () => {
         localStorage.geminiKey = localStorage.geminiKey || prompt('Gemini Key')
 
@@ -454,33 +438,6 @@ Synthesis exercise
         document.styleSheets[0].disabled = true
         console.log('Slides initialized')
       }
-
-      const reflect = () => {
-        open(
-          '#' +
-            encodeURIComponent(
-              `Generate 10 reflection questions based on the following:\n\n${responseElement.textContent}`,
-            ),
-          '_blank',
-        )
-      }
-
-      const quiz = () => {
-        open(
-          '#' +
-            encodeURIComponent(
-              `Generate 10 multiple choice quiz questions based on the following:\n\n${responseElement.textContent}`,
-            ),
-          '_blank',
-        )
-      }
-
-      clearBtn.addEventListener('click', clear)
-      copyBtn.addEventListener('click', copyResponse)
-      regenerateBtn.addEventListener('click', chat)
-      presentBtn.addEventListener('click', present)
-      reflectBtn.addEventListener('click', reflect)
-      quizBtn.addEventListener('click', quiz)
 
       const updateHash = async () => {
         location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))

@@ -517,10 +517,8 @@ Synthesis exercise
           e.preventDefault()
           present()
         }
-      })
 
-      document.addEventListener('keydown', function (ev) {
-        if ((ev.key === 'c' || ev.key === 'C') && (ev.ctrlKey || ev.metaKey)) {
+        if (isCtrl && (e.key === 'c' || e.key === 'C')) {
           copyResponse()
         }
       })

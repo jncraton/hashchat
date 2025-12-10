@@ -409,7 +409,6 @@ Synthesis exercise
                           '\n\n## Execution Result\n\n' + part.codeExecutionResult.output + '\n-----\n\n'
 
                       updateResponse(responseElement.textContent)
-                      updateHash()
                     }
                   } catch (e) {
                     console.error('Error parsing JSON:', e)
@@ -464,9 +463,11 @@ Synthesis exercise
             ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'em', 'strong'],
           })
         }
+        updateHash()
       }
 
       responseElement.addEventListener('input', e => updateResponse(e.target.value))
+      document.querySelector('#userPrompt').addEventListener('input', updateHash)
       document.querySelector('#raw').addEventListener('click', _ => updateResponse(responseElement.textContent))
 
       addEventListener('keydown', function (e) {

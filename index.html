@@ -103,8 +103,9 @@
           <label>
             Model
             <select id="model" autocomplete="off">
+              <option value="gemma-3-27b-it" selected>Gemma 3 27b</option>
               <option value="gemini-pro-latest">Gemini Pro Latest</option>
-              <option value="gemini-flash-latest" selected>Gemini Flash Latest</option>
+              <option value="gemini-flash-latest">Gemini Flash Latest</option>
               <option value="gemini-flash-lite-latest">Gemini Flash Lite Latest</option>
             </select>
           </label>
@@ -323,6 +324,31 @@ Synthesis exercise
 
         console.log(sysPrompt)
 
+        let tools = [
+          [
+            {
+              url_context: {},
+            },
+            {
+              google_search: {},
+            },
+          ],
+        ]
+
+        let generationConfig = {
+          thinkingConfig: {
+            thinkingBudget: thinking.value,
+            includeThoughts: true,
+          },
+          temperature: temperature.value,
+        }
+
+        if (model.value.includes('gemma')) {
+          // Gemma lacks support for search and url_context via API
+          tools = []
+          delete generationConfig.thinkingConfig
+        }
+
         try {
           const response = await fetch(url, {
             method: 'POST',
@@ -331,37 +357,17 @@ Synthesis exercise
               'x-goog-api-key': localStorage.geminiKey,
             },
             body: JSON.stringify({
-              system_instruction: {
-                parts: [
-                  {
-                    text: sysPrompt,
-                  },
-                ],
-              },
               contents: [
                 {
                   parts: [
                     {
-                      text: userPrompt.value,
+                      text: sysPrompt + '\n\n' + userPrompt.value,
                     },
                   ],
                 },
               ],
-              tools: [
-                {
-                  url_context: {},
-                },
-                {
-                  google_search: {},
-                },
-              ],
-              generationConfig: {
-                thinkingConfig: {
-                  thinkingBudget: thinking.value,
-                  includeThoughts: true,
-                },
-                temperature: temperature.value,
-              },
+              tools: tools,
+              generationConfig: generationConfig,
             }),
           })
 

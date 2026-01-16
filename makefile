@@ -4,7 +4,7 @@ do.min.css:
 	wget https://github.com/jncraton/docss/releases/download/v0.6.0/do.min.css
 
 ugfm.min.js:
-	wget -O $@ https://github.com/jncraton/ugfm/releases/download/v0.5.0/ugfm.min.js
+	wget -O $@ https://github.com/jncraton/ugfm/releases/download/v0.6.0/ugfm.min.js
 
 lint:
 	npx prettier@3.6.2 --check .

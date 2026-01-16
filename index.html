@@ -449,8 +449,14 @@ Synthesis exercise
         console.log('Slides initialized')
       }
 
+      let updateHashDebounce
+
       const updateHash = async () => {
-        location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))
+        clearTimeout(updateHashDebounce)
+
+        updateHashDebounce = setTimeout(async () => {
+          location.hash = await encode(JSON.stringify([userPrompt.value, responseElement.textContent]))
+        }, 100)
       }
 
       const updateResponse = response => {

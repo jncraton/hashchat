@@ -103,10 +103,7 @@
           <label>
             Model
             <select id="model" autocomplete="off">
-              <option value="gemma-3-27b-it" selected>Gemma 3 27b</option>
-              <option value="gemini-pro-latest">Gemini Pro Latest</option>
-              <option value="gemini-flash-latest">Gemini Flash Latest</option>
-              <option value="gemini-flash-lite-latest">Gemini Flash Lite Latest</option>
+              <option value="xiaomi/mimo-v2-flash:free" selected>xiaomi/mimo-v2-flash:free</option>
             </select>
           </label>
           <label>
@@ -349,7 +346,7 @@ Synthesis exercise
               Authorization: `Bearer ${localStorage.openRouterKey}`,
             },
             body: JSON.stringify({
-              model: 'xiaomi/mimo-v2-flash:free',
+              model: model.value,
               messages: [
                 {
                   role: 'user',

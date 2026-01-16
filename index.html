@@ -411,6 +411,8 @@ Synthesis exercise
                     if (content) {
                       responseElement.textContent += content
                       updateResponse(responseElement.textContent)
+                    } else {
+                      console.log("Thinking notification recieved")
                     }
                   } catch (e) {
                     // Ignore invalid JSON

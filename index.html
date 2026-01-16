@@ -353,7 +353,10 @@ Synthesis exercise
                   content: sysPrompt + '\n\n' + userPrompt.value,
                 },
               ],
-              reasoning: { enabled: true },
+              reasoning: {
+                enabled: true,
+                max_tokens: +thinking.value,
+              },
               stream: true,
             }),
           })

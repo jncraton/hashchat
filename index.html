@@ -299,7 +299,7 @@ Synthesis exercise
       }
 
       const chat = async () => {
-        localStorage.geminiKey = localStorage.geminiKey || prompt('Gemini Key')
+        localStorage.openRouterKey = localStorage.openRouterKey || prompt('OpenRouter Key')
 
         if (!userPrompt.value) {
           alert('Please enter a prompt.')
@@ -350,24 +350,22 @@ Synthesis exercise
         }
 
         try {
-          const response = await fetch(url, {
+          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-goog-api-key': localStorage.geminiKey,
+              Authorization: `Bearer ${localStorage.openRouterKey}`,
             },
             body: JSON.stringify({
-              contents: [
+              model: 'xiaomi/mimo-v2-flash:free',
+              messages: [
                 {
-                  parts: [
-                    {
-                      text: sysPrompt + '\n\n' + userPrompt.value,
-                    },
-                  ],
+                  role: 'user',
+                  content: sysPrompt + '\n\n' + userPrompt.value,
                 },
               ],
-              tools: tools,
-              generationConfig: generationConfig,
+              reasoning: { enabled: true },
+              stream: true,
             }),
           })
 
@@ -375,7 +373,7 @@ Synthesis exercise
             if (response.status == '400' || response.status == '403') {
               responseMarkdownElement.innerHTML =
                 '<h1>API Error</h1><h2>Bad Request</h2>Retry after providing new API key.'
-              localStorage.geminiKey = ''
+              localStorage.openRouterKey = ''
             } else {
               responseMarkdownElement.innerHTML = '<h1>API Error</h1>'
             }
@@ -385,43 +383,51 @@ Synthesis exercise
           const reader = response.body.getReader()
           const decoder = new TextDecoder()
 
-          while (true) {
-            const { done, value } = await reader.read()
-            if (done) {
-              break
-            }
-            const chunk = decoder.decode(value)
-            const lines = chunk.split('\n')
-            for (const line of lines) {
-              if (line.startsWith('data:')) {
-                const jsonString = line.substring(5).trim()
-                if (jsonString) {
+          let buffer = ''
+
+          try {
+            while (true) {
+              const { done, value } = await reader.read()
+
+              if (done) break
+
+              // Append new chunk to buffer
+
+              buffer += decoder.decode(value, { stream: true })
+
+              // Process complete lines from buffer
+
+              while (true) {
+                const lineEnd = buffer.indexOf('\n')
+
+                if (lineEnd === -1) break
+
+                const line = buffer.slice(0, lineEnd).trim()
+
+                buffer = buffer.slice(lineEnd + 1)
+
+                if (line.startsWith('data: ')) {
+                  const data = line.slice(6)
+
+                  if (data === '[DONE]') break
+
                   try {
-                    const json = JSON.parse(jsonString)
-                    console.log(json)
-                    if (json.candidates && json.candidates[0].content && json.candidates[0].content.parts[0]) {
-                      const part = json.candidates[0].content.parts[0]
-                      if (part.text) {
-                        console.log(part.text)
+                    const parsed = JSON.parse(data)
 
-                        if (!part.thought) {
-                          responseElement.textContent += part.text
-                        }
-                      }
-                      if (part.executableCode)
-                        responseElement.textContent += '\n\n## Executable Code\n\n' + part.executableCode.code
-                      if (part.codeExecutionResult)
-                        responseElement.textContent +=
-                          '\n\n## Execution Result\n\n' + part.codeExecutionResult.output + '\n-----\n\n'
+                    const content = parsed.choices[0].delta.content
 
+                    if (content) {
+                      responseElement.textContent += content
                       updateResponse(responseElement.textContent)
                     }
                   } catch (e) {
-                    console.error('Error parsing JSON:', e)
+                    // Ignore invalid JSON
                   }
                 }
               }
             }
+          } finally {
+            reader.cancel()
           }
         } catch (error) {
           console.error('Error:', error)

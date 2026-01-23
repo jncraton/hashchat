@@ -427,7 +427,7 @@ Discuss the issue with a neighbor
 
       const updateResponse = response => {
         if (response) {
-          responseElement.textContent = response
+          responseElement.textContent = response.trimStart()
 
           responseMarkdownElement.innerHTML = ''
           responseMarkdownElement.append(...ugfm(response).childNodes)

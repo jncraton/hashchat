@@ -189,11 +189,11 @@ Questions should be no more than 30 words. Answers should be no more than 8 word
 {% if revealjs or slides %}
 ## Formatting
 
-The slides should be in markdown format that will be used to generate a reveal.js presentation using pandoc.
+Generate markdown to feed to pandoc for a reveal.js presentation.
 
-New slides are created using h2 `## title` to create a new slide. The title is required. `##` on a line alone is illegal. Horizontal rules `---` are used to create a new slide in place of `##` only on very short slides containing a single item. 
+Slides are separated using level 2 headings (`## title`) or horizonal rules (`---`). Never use both.
 
-The first slide should use a level 1 heading and include no content other than the title. Other slides should use level 2 headings. The title should reflect the content of the presentation and never use the word "lecture" or "presnetation".
+The deck should begin with a level 1 heading as the title. It must be immediately followed by a level 2 heading. The title should reflect the content of the presentation and never use the word "lecture" or "presentation".
 
 Slide titles should never be more than 3 words.
 
@@ -203,7 +203,7 @@ If a list is used on a slide, do not end list item text with a period.
 
 Properly fence any code examples on slides.
 
-The deck should include 20 to 30 slides.
+The deck should include 20 to 30 slides unless a different size is requested.
 
 The entire response must only the slide deck. Do not include any introductory or concluding text.
 
@@ -228,7 +228,7 @@ What do you think of that?
 
 ## Exercise
 
-Application exercise
+Look under your chairs
 
 ## Slide 3 Title
 
@@ -237,7 +237,7 @@ Application exercise
 
 ## Exercise
 
-Synthesis exercise
+Discuss the issue with a neighbor
 ```
 {% endif %}
           </textarea
